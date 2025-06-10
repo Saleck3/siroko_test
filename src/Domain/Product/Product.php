@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Product;
 
 use App\Domain\Product\ProductRepositoryInterface;
 use Doctrine\ORM\Mapping as ORM;
