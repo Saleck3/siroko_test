@@ -17,3 +17,19 @@ docker compose up -d
 And navigate to [localhost](https://localhost/) (You should get a certificates warning, thats expected, just [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334))
 
 On the browser you only gonna get the "Welcome to Symfony 7" placeholder but the app should be up and running at this point
+
+## Running tests
+
+If you have PHP and Symfony installed locally, you can run
+
+```
+symfony php vendor/bin/phpunit
+```
+
+If you don't you can run the tests directly in the container with
+
+```
+docker exec -it siroko_test-php sh -c "php vendor/bin/phpunit"
+```
+
+(Replace "siroko_test-php" with the name of the container that docker generated if it's different)
