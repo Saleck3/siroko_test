@@ -6,19 +6,19 @@ use App\Domain\Product\ProductRepositoryInterface;
 use App\Tests\Factory\Product\ProductFactory;
 use App\UseCases\Product\GetAllProductsUseCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 class GetAllProductsUseCaseTest extends WebTestCase
 {
-    use ResetDatabase;
+    use ResetDatabase, Factories;
 
     public function testCanRetrieveProducts(): void
     {
         $expected = 2;
         //Given expected products
-        for ($i = 0; $i < $expected; $i++) {
-            ProductFactory::createOne();
-        }
+
+        ProductFactory::createMany($expected);
 
         //When retrieving products
         $productRepository = $this->getContainer()->get(ProductRepositoryInterface::class);
@@ -26,6 +26,6 @@ class GetAllProductsUseCaseTest extends WebTestCase
         $allProducts = $productsUseCase->getAll();
 
         //Then products quantity is the same
-        self::assertEquals($expected, count($allProducts));
+        $this->assertCount($expected, $allProducts);
     }
 }

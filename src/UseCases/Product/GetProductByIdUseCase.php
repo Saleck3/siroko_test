@@ -5,7 +5,7 @@ namespace App\UseCases\Product;
 use App\Domain\Product\Product;
 use App\Domain\Product\ProductRepositoryInterface;
 
-class GetProductByIdUseCase
+readonly class GetProductByIdUseCase
 {
     public function __construct(private ProductRepositoryInterface $productRepository)
     {

@@ -9,12 +9,16 @@ final class ProductsControllerTest extends WebTestCase
 {
     use ResetDatabase;
 
-    public function testIndex(): void
+    public function testControllerReturns200(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/products');
+        //Given a client
+        $client = $this->createClient();
 
-        self::assertResponseIsSuccessful();
+        //When making the http call
+        $client->request('GET', '/products/');
+
+        //then response is 200
+        $this->assertResponseIsSuccessful();
     }
 
 }
