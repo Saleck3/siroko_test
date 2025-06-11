@@ -19,7 +19,7 @@ readonly class AddProductToCartUseCase
     /**
      * @throws ProductNotFoundException
      */
-    public function addProduct(string $userId, int $productId): void
+    public function addProduct(string $userId, int $productId): Cart
     {
         //valido que el producto a agregar exista
         if (!$this->validateProduct($productId)) {
@@ -57,6 +57,7 @@ readonly class AddProductToCartUseCase
         }
         //guardo en la base
         $this->cartRepository->save($cart);
+        return $cart;
     }
 
     private function validateProduct(int $productId): bool
