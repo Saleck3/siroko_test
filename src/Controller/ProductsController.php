@@ -7,9 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/products')]
 final class ProductsController extends AbstractController
 {
-    #[Route('/products', name: 'app_products')]
+    #[Route('/', name: 'app_products')]
     public function index(GetAllProductsUseCase $getAllProductsUseCase): JsonResponse
     {
         $products = $getAllProductsUseCase->getAll();

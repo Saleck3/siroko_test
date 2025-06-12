@@ -1,32 +1,24 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Product;
 
 use App\Domain\Product\ProductRepositoryInterface;
 use App\Tests\Factory\Product\ProductFactory;
 use App\UseCases\Product\GetAllProductsUseCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-final class ProductsControllerTest extends WebTestCase
+class GetAllProductsUseCaseTest extends WebTestCase
 {
-    use ResetDatabase;
-
-    public function testIndex(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/products');
-
-        self::assertResponseIsSuccessful();
-    }
+    use ResetDatabase, Factories;
 
     public function testCanRetrieveProducts(): void
     {
         $expected = 2;
         //Given expected products
-        for ($i = 0; $i < $expected; $i++) {
-            ProductFactory::createOne();
-        }
+
+        ProductFactory::createMany($expected);
 
         //When retrieving products
         $productRepository = $this->getContainer()->get(ProductRepositoryInterface::class);
@@ -34,6 +26,6 @@ final class ProductsControllerTest extends WebTestCase
         $allProducts = $productsUseCase->getAll();
 
         //Then products quantity is the same
-        self::assertEquals($expected, count($allProducts));
+        $this->assertCount($expected, $allProducts);
     }
 }
