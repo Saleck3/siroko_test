@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Tests\Factory\Product;
+namespace App\Tests\Factory\Cart;
 
-use App\Domain\Product\Product;
+use App\Domain\Cart\Cart;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
-/**
- * @extends PersistentProxyObjectFactory<Product>
- */
-final class ProductFactory extends PersistentProxyObjectFactory
+class CartFactory extends PersistentProxyObjectFactory
 {
     public function __construct()
     {
@@ -16,14 +13,13 @@ final class ProductFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return Product::class;
+        return Cart::class;
     }
 
     protected function defaults(): array|callable
     {
         return [
-            'name' => self::faker()->text(255),
-            'price' => self::faker()->randomFloat(),
+            'userID' => self::faker()->text(255)
         ];
     }
 

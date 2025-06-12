@@ -83,7 +83,7 @@ class AddProductToCartUseCaseTest extends WebTestCase
         $product = 999999;
 
         //When trying to add a product
-        $cart = $this->addProductToCart->addProduct($user, $product);
+        $this->addProductToCart->addProduct($user, $product);
 
         //Then ProductNotFoundException is throwed
 
