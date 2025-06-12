@@ -6,6 +6,7 @@ use App\Infrastructure\Cart\DoctrineCartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: DoctrineCartRepository::class)]
 class Cart
@@ -19,6 +20,7 @@ class Cart
      * @var Collection<int, CartProduct>
      */
     #[ORM\OneToMany(targetEntity: CartProduct::class, mappedBy: 'cart', cascade: ['persist'])]
+    #[MaxDepth(1)]
     private Collection $products;
 
     #[ORM\Column(length: 255)]

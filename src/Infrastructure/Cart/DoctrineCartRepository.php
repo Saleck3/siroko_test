@@ -33,7 +33,7 @@ class DoctrineCartRepository extends ServiceEntityRepository implements CartRepo
         return $cart;
     }
 
-    public function findByUserId(string $userId)
+    public function findByUserId(string $userId): ?Cart
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.userID = :userId')

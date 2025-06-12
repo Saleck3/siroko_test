@@ -9,6 +9,6 @@ interface CartRepositoryInterface
 
     public function add(Cart $cart, bool $flush = false): Cart;
 
-    public function findByUserId(string $userId);
+    public function findByUserId(string $userId): ?Cart;
 
 }

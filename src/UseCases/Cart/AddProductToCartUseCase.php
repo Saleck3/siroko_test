@@ -21,12 +21,11 @@ readonly class AddProductToCartUseCase
      */
     public function addProduct(string $userId, int $productId): Cart
     {
-        //valido que el producto a agregar exista
         if (!$this->validateProduct($productId)) {
             throw new ProductNotFoundException();
         }
 
-        //obtengo el cart (si existe)
+        //Search for existing cart
         $cart = $this->cartRepository->findByUserId($userId);
 
         if (empty($cart)) {
@@ -34,7 +33,7 @@ readonly class AddProductToCartUseCase
             $cart = new Cart();
             $cart->setUserId($userId);
 
-            $this->createProductAndAddToCart($productId, $cart);
+            $this->createProductAndAddToCart($cart, $productId);
 
         } else {
 
@@ -52,10 +51,10 @@ readonly class AddProductToCartUseCase
             }
             //Else create new product
             if ($flag) {
-                $this->createProductAndAddToCart($productId, $cart);
+                $this->createProductAndAddToCart($cart, $productId);
             }
         }
-        //guardo en la base
+
         $this->cartRepository->save($cart);
         return $cart;
     }
@@ -72,7 +71,7 @@ readonly class AddProductToCartUseCase
      * @param Cart $cart
      * @return void
      */
-    public function createProductAndAddToCart(int $productId, Cart $cart): void
+    public function createProductAndAddToCart(Cart $cart, int $productId): void
     {
         $product = new CartProduct();
         $product->setProductId($productId);
