@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use function PHPUnit\Framework\isNumeric;
 
 #[Route('/cart')]
 class CartController extends AbstractController
@@ -38,7 +37,7 @@ class CartController extends AbstractController
             return new JsonResponse(['error' => 'productId is required'], 400);
         }
 
-        if (!isNumeric($parameters['productId'])) {
+        if (!is_numeric($parameters['productId'])) {
             return new JsonResponse(['error' => 'productId must be a number'], 400);
         }
 
@@ -64,7 +63,7 @@ class CartController extends AbstractController
             return new JsonResponse(['error' => 'productId is required'], 400);
         }
 
-        if (!isNumeric($parameters['productId'])) {
+        if (!is_numeric($parameters['productId'])) {
             return new JsonResponse(['error' => 'productId must be a number'], 400);
         }
 
@@ -86,7 +85,7 @@ class CartController extends AbstractController
             return new JsonResponse(['error' => 'productId is required'], 400);
         }
 
-        if (!isNumeric($parameters['productId'])) {
+        if (!is_numeric($parameters['productId'])) {
             return new JsonResponse(['error' => 'productId must be a number'], 400);
         }
 
@@ -94,7 +93,7 @@ class CartController extends AbstractController
             return new JsonResponse(['error' => 'quantity is required'], 400);
         }
 
-        if (!isNumeric($parameters['quantity'])) {
+        if (!is_numeric($parameters['quantity'])) {
             return new JsonResponse(['error' => 'quantity must be a number'], 400);
         }
 

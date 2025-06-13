@@ -2,13 +2,12 @@
 
 namespace App\Domain\Cart;
 
-use App\Infrastructure\Cart\DoctrineCartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-#[ORM\Entity(repositoryClass: DoctrineCartRepository::class)]
+#[ORM\Entity(repositoryClass: CartRepositoryInterface::class)]
 class Cart
 {
     #[ORM\Id]
