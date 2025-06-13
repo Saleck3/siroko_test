@@ -1,29 +1,45 @@
 <?php
 
-namespace App\Domain\Cart;
+namespace App\Domain\Order;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-#[ORM\Entity(repositoryClass: CartRepositoryInterface::class)]
-class Cart
+#[ORM\Entity(repositoryClass: OrderRepositoryInterface::class)]
+#[ORM\Table(name: "user_orders")]
+class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups("order")
+     */
     private ?int $id = null;
 
     /**
-     * @var Collection<int, CartProduct>
+     * @var Collection<int, OrderProduct>
      */
-    #[ORM\OneToMany(targetEntity: CartProduct::class, mappedBy: 'cart', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'order', cascade: ['persist'])]
     #[MaxDepth(1)]
+    /**
+     * @Groups("order")
+     */
     private Collection $products;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups("order")
+     */
     private ?string $userID = null;
+
+    #[ORM\Column(nullable: true)]
+    /**
+     * @Groups("order")
+     */
+    private ?float $total = 0;
 
     public function __construct()
     {
@@ -36,31 +52,33 @@ class Cart
     }
 
     /**
-     * @return Collection<int, CartProduct>
+     * @return Collection<int, OrderProduct>
      */
     public function getProducts(): Collection
     {
         return $this->products;
     }
 
-    public function addProduct(CartProduct $product): static
+    public function addProduct(OrderProduct $product): static
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setCart($this);
+            $product->setOrder($this);
         }
+        $this->total += $product->getPrice() * $product->getQuantity();
 
         return $this;
     }
 
-    public function removeProduct(CartProduct $product): static
+    public function removeProduct(OrderProduct $product): static
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCart() === $this) {
-                $product->setCart(null);
+            if ($product->getOrder() === $this) {
+                $product->setOrder(null);
             }
         }
+        $this->total -= $product->getPrice() * $product->getQuantity();
 
         return $this;
     }
@@ -76,4 +94,10 @@ class Cart
 
         return $this;
     }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
 }

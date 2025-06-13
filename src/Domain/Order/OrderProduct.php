@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Cart;
+namespace App\Domain\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CartProductRepositoryInterface::class)]
-class CartProduct
+#[ORM\Entity(repositoryClass: OrderProductRepositoryInterface::class)]
+class OrderProduct
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,10 +16,13 @@ class CartProduct
     private ?int $productId = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    private ?int $quantity = 1;
 
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'products')]
-    private ?Cart $cart = null;
+    private ?Order $order = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
 
     public function getId(): ?int
     {
@@ -50,15 +53,28 @@ class CartProduct
         return $this;
     }
 
-    public function getCart(): ?Cart
+    public function getOrder(): ?Order
     {
-        return $this->cart;
+        return $this->order;
     }
 
-    public function setCart(?Cart $cart): static
+    public function setOrder(?Order $order): static
     {
-        $this->cart = $cart;
+        $this->order = $order;
 
         return $this;
     }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }
