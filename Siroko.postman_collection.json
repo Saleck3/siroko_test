@@ -1,0 +1,285 @@
+{
+	"info": {
+		"_postman_id": "bc7a1404-22c1-412d-ab83-75cff608a51b",
+		"name": "Siroko",
+		"description": "The project is a small cart and checkout API\n\n“userId” is used as an identifier through the API, this is any random string and in a real case should be replaced with a real user identifier, with authentication (probably a JWT)\n\n## Functionalities:\n\n**Product**: Only has a GET method that retrieves the list of products in the database (if you had runned the fixtures there should be 20)\n\n**Cart**: You can add, remove and update individual products from the cart, you also have a GET method to see the state and an emptyCart method\n\n**Order**: Once the cart has elements, you can create the order (similar to a checkout in a real environment), it will have a total and the items that were preloaded in the cart, you can later retrieve individual orders with the ID or all the orders from a user with the userId\n\n## Variables\n\nTheres only one variable defined at a collection level that is \"url\" by default it's value would be \"https://localhost\" but if your docker has other domain or port, you can change it there",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1536967"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "GetAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/products",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "GetCart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cart/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "Saleck",
+									"description": "Any string used to identify the user"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    /* Any string used to identify the user */\r\n    \"userId\": \"Saleck\",\r\n    /* Has to be a valid product id*/\r\n    \"productId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cart/addProduct",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    /* Any string used to identify the user */\r\n    \"userId\": \"Saleck\",\r\n    /* Has to be a valid product id, that has been added to cart*/\r\n    \"productId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cart/removeProduct",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"removeProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProductQuantity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    /* Any string used to identify the user */\r\n    \"userId\": \"Saleck\",\r\n    /* Has to be a valid product id, if it's not in the cart, it will be added*/\r\n    \"productId\": 2,\r\n    /* Any number, if it is 0 or lower the product will be removed from cart*/\r\n    \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cart/updateProduct",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"updateProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    /* Any string used to identify the user */\r\n    \"userId\": \"Saleck\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cart/empty",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"empty"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The cart contains products with different quantities, a user can only have one cart at a time"
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    /* Any string used to identify the user */\r\n    \"userId\": \"Saleck\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/order/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/order/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Has to exist as an order"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/order/user/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								"user",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "Saleck",
+									"description": "Any string used to identify the user"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The order is created based on the cart from the user, so it's needed a cart for it's creation, after being created it can then it can be retrived by id or by userId"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://localhost",
+			"type": "string"
+		}
+	]
+}

@@ -10,6 +10,7 @@ This software should simulate an cart API and checkout system for an e-commerce
 
 After cloning the repo, copy and rename “example.env” to “.env” and set the variables values to the one that you prefer
 Then run:
+
 ```
 docker compose up -d
 ```
@@ -33,3 +34,43 @@ docker exec -it siroko_test-php sh -c "php vendor/bin/phpunit"
 ```
 
 (Replace "siroko_test-php" with the name of the container that docker generated if it's different)
+
+## Technologies and packages
+
+-   Docker
+-   PHP 8.3
+-   MySQL 8
+-   Symfony 7.3
+-   Doctrine ORM
+-   PHPUnit
+-   Symfony’s Maker Bundle
+-   Symfony’s Serializer
+-   Zenstruck’s Foundry (Factories and database resets in tests)
+
+Domain
+
+- Product
+    - Id (int)
+    - Name (string)
+    - Price (float)
+- Cart
+    - Id (int)
+    - UserId (string)
+    - Products (collection of CartProduct)
+- CartProduct
+    - Id (int)
+    - ProductId (int) (soft reference to Product)
+    - Quantity (int)
+- Order
+    - Id (int)
+    - UserId (string)
+    - Products (collection of OrderProduct)
+- OrderProduct
+    - Id (int)
+    - ProductId (int) (soft reference to Product)
+    - Quantity (int)
+    - Price (float)
+
+# Documentation
+
+Use postman collection @ for methods calls and descriptions
