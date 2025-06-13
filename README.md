@@ -73,4 +73,4 @@ Domain
 
 # Documentation
 
-Use postman collection @ for methods calls and descriptions
+Use postman collection /Siroko.postman_collection.json for methods calls and descriptions
